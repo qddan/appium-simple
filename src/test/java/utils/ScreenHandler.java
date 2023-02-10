@@ -7,7 +7,6 @@ import io.appium.java_client.touch.WaitOptions;
 import io.appium.java_client.touch.offset.PointOption;
 import org.openqa.selenium.Dimension;
 
-import java.awt.*;
 import java.time.Duration;
 
 public class ScreenHandler {
@@ -20,8 +19,9 @@ public class ScreenHandler {
 
         // Calculate touch point
         int xStarPoint = 50*screenWidth/100;
-        int xEndPoint = xStarPoint;
         int yStarPoint = 30*screenHeight/100;
+
+        int xEndPoint = xStarPoint;
         int yEndPoint = 50*screenHeight/100;
 
         // convert to pointOptions - coordinates
@@ -31,7 +31,8 @@ public class ScreenHandler {
         // Perform Touch actions
         TouchAction touchAction = new TouchAction(appiumDriver);
 
-        touchAction.press(endPoint)
+        touchAction
+                .press(endPoint)
                 .waitAction(new WaitOptions().withDuration(Duration.ofSeconds(1)))
                 .moveTo(startPoint)
                 .release()

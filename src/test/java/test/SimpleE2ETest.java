@@ -4,16 +4,12 @@ import driver.DriverFactory;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.MobileBy;
 import io.appium.java_client.MobileElement;
-import io.appium.java_client.android.AndroidDriver;
-import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import utils.ScreenHandler;
 
-import java.net.URL;
 import java.security.SecureRandom;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 public class SimpleE2ETest {
     public static void main(String[] args) throws InterruptedException {
@@ -30,7 +26,7 @@ public class SimpleE2ETest {
         passwordInputElem.sendKeys("12345678");
         loginBtnElem.click();
 
-        // Wait to see results, just for fun :D
+        // Wait to login successful
         Thread.sleep(2000);
 
         // Go back to home
@@ -43,14 +39,14 @@ public class SimpleE2ETest {
 
         // print out the item details
         WebDriverWait wait = new WebDriverWait(appiumDriver, 15);
-        wait.until(ExpectedConditions.visibilityOfElementLocated(MobileBy.AccessibilityId("addToCardBtn")));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(MobileBy.AccessibilityId("addToCartBtn")));
         ScreenHandler.swipeUp(appiumDriver);
 
         MobileElement productBrandElem = appiumDriver.findElement(MobileBy.AccessibilityId("productBrand"));
         MobileElement productNameElem = appiumDriver.findElement(MobileBy.AccessibilityId("productName"));
         MobileElement productAvailabilityElem = appiumDriver.findElement(MobileBy.AccessibilityId("productAvailability"));
         MobileElement productPriceElem = appiumDriver.findElement(MobileBy.AccessibilityId("productPrice"));
-        MobileElement addToCardBtnElem = appiumDriver.findElement(MobileBy.AccessibilityId("addToCardBtn"));
+        MobileElement addToCardBtnElem = appiumDriver.findElement(MobileBy.AccessibilityId("addToCartBtn"));
 
         System.out.println("Brand: "+ productBrandElem.getText());
         System.out.println("name: "+ productNameElem.getText());
