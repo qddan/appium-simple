@@ -27,7 +27,8 @@ public class SimpleE2ETest {
         loginBtnElem.click();
 
         // Wait to login successful
-        Thread.sleep(2000);
+        WebDriverWait waitLogin = new WebDriverWait(appiumDriver, 15);
+        waitLogin.until(ExpectedConditions.visibilityOfElementLocated(MobileBy.AccessibilityId("signOutBtn")));
 
         // Go back to home
         appiumDriver.findElement(MobileBy.AccessibilityId("homeIcon")).click();
@@ -37,11 +38,11 @@ public class SimpleE2ETest {
         MobileElement randomProductItem = productItemElems.get(new SecureRandom().nextInt(productItemElems.size()));
         randomProductItem.click();
 
-        // print out the item details
         WebDriverWait wait = new WebDriverWait(appiumDriver, 15);
         wait.until(ExpectedConditions.visibilityOfElementLocated(MobileBy.AccessibilityId("addToCartBtn")));
         ScreenHandler.swipeUp(appiumDriver);
 
+        // print out the item details
         MobileElement productBrandElem = appiumDriver.findElement(MobileBy.AccessibilityId("productBrand"));
         MobileElement productNameElem = appiumDriver.findElement(MobileBy.AccessibilityId("productName"));
         MobileElement productAvailabilityElem = appiumDriver.findElement(MobileBy.AccessibilityId("productAvailability"));
@@ -54,9 +55,41 @@ public class SimpleE2ETest {
         System.out.println("Price: "+ Double.parseDouble(productPriceElem.getText().split(" ")[1].trim()));
         addToCardBtnElem.click();
 
+        // Go to cart and click on checkout button
+        appiumDriver.findElement(MobileBy.AccessibilityId("cartIcon")).click();
+        appiumDriver.findElement(MobileBy.AccessibilityId("checkoutBtn")).click();
+
+        // Input shipping address
+        MobileElement phoneNumElem = appiumDriver.findElement(MobileBy.AccessibilityId("phoneNum"));
+        MobileElement shippingAdd1Elem = appiumDriver.findElement(MobileBy.AccessibilityId("shippingAdd1"));
+        MobileElement shippingAdd2Elem = appiumDriver.findElement(MobileBy.AccessibilityId("shippingAdd2"));
+        phoneNumElem.sendKeys("123456789");
+        shippingAdd1Elem.sendKeys("add 1");
+        shippingAdd2Elem.sendKeys("add 2");
+        ScreenHandler.swipeUp(appiumDriver);
+
+
+        MobileElement shippingCityElem = appiumDriver.findElement(MobileBy.AccessibilityId("shippingCity"));
+        MobileElement shippingZIPCodeElem = appiumDriver.findElement(MobileBy.AccessibilityId("shippingZIPCode"));
+        shippingCityElem.sendKeys("city");
+        shippingZIPCodeElem.sendKeys("7000");
+
+
+        MobileElement selectCountryTriggerElem = appiumDriver.findElement(MobileBy.AccessibilityId("selectCountryTrigger"));
+        selectCountryTriggerElem.click();
+
+        MobileElement countryNameElem = appiumDriver.findElement(MobileBy.xpath("//*[@text=\"Angola\"]"));
+        countryNameElem.click();
+
+        MobileElement confirmShippingBtnElem = appiumDriver.findElement(MobileBy.AccessibilityId("confirmShippingFormBtn"));
+        confirmShippingBtnElem.click();
+
+
 
         // Wait to see results, just for fun :D
         Thread.sleep(3000);
+
+        //page object modal/ selenium gird
     }
 }
 
